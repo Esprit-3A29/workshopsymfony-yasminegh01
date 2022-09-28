@@ -1,0 +1,57 @@
+
+<h4>liste de formations de </h4><h1>Yasmine GHERIBI</h1>
+{% if tab_formations is empty %}
+    <h6 style="color: coral">Pas de formations</h6>
+{% else %}
+    {% set titre ="" %}
+    {% set max =0 %}
+    {% set nbTot =0 %}
+    <table border="1">
+        <tr>
+            <th>
+                ref
+            </th>
+            <th>
+                titre
+            </th>
+            <th>
+                description
+            </th>
+            <th>
+                nbre participants
+            </th>
+
+            <th>
+                participer
+            </th>
+
+        </tr>
+    {% for i in tab_formations %}
+        <tr>
+            {% set nbTot = nbTot + i.nb_participants %}
+        {% if i.nb_participants > max %}
+            {% set titre = i.Titre %}
+            {% set max = i.nb_participants %}
+        {% endif %}
+
+        {% if i.Description == "theorique"%}
+            <td>{{i.ref}} </td>
+            <td>{{i.Titre|upper}} </td>
+            <td>{{i.Description}}</td>
+            <td>{{i.nb_participants}}</td>
+            <td>
+                {% if i.nb_participants == 0 %}<a href="{{ path('get_name' , { 'nom': i.Titre }) }}">Participer</a>
+                {% else %} complet
+                {% endif %}
+            </td>
+
+            <br>
+        {% endif %}
+
+        </tr>
+    {% endfor %}
+    </table>
+{% endif %}
+<h3>Nbr de formations totales: {{ tab_formations|length }}</h3>
+<h4>la formation ayant le plus grand nombre de participants : {{ titre|upper }} ({{ max }} participants)</h4>
+<h5>nombre totale de participants : {{ nbTot }}</h5>
