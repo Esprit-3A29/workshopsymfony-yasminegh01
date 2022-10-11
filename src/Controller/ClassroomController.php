@@ -1,0 +1,67 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\Classroom;
+use App\Repository\ClassroomRepository;
+use App\Form\ClassroomType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Persistence\ManagerRegistry;
+
+class ClassroomController extends AbstractController
+{
+    #[Route('/classroom', name: 'app_classroom')]
+    public function index(): Response
+    {
+        return $this->render('classroom/index.html.twig', [
+            'controller_name' => 'ClassroomController',
+        ]);
+    }
+
+    #[Route('/list', name: 'list_classroom')]
+public function list(ClassroomRepository $repository):Response
+    {
+
+        $List=$repository->findAll();
+
+    return $this->render('classroom/listClassroom.html.twig', [
+     'tab_classroom' => $List,
+ ]);
+    }
+    #[Route('/addClassroom', name: 'Add_Classroom')]
+    public function addClassroom(Request $request ,ManagerRegistry $doctrine):Response
+    {
+        $Classroom= new Classroom();
+
+        $form = $this->createForm(ClassroomType::class,$Classroom);
+        $entityManager = $doctrine->getManager();
+
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $Classroom=$form->getData();
+
+            // tell Doctrine you want to (eventually) save the Product (no queries yet)
+            $entityManager->persist($Classroom);
+
+            // actually executes the queries (i.e. the INSERT query)
+            $entityManager->flush();
+
+        }
+            return $this->render('classroom/AddClassroom.html.twig', [
+            'Form' => $form->createView(),
+
+        ]);
+
+
+
+
+
+    }
+
+}
