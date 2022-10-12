@@ -34,9 +34,9 @@ public function list(ClassroomRepository $repository):Response
     #[Route('/addClassroom', name: 'Add_Classroom')]
     public function addClassroom(Request $request ,ManagerRegistry $doctrine):Response
     {
-        $Classroom= new Classroom();
+        $Classroom = new Classroom();
 
-        $form = $this->createForm(ClassroomType::class,$Classroom);
+        $form = $this->createForm(ClassroomType::class, $Classroom);
         $entityManager = $doctrine->getManager();
 
 
@@ -44,24 +44,74 @@ public function list(ClassroomRepository $repository):Response
         if ($form->isSubmitted() && $form->isValid()) {
 
 
-            $Classroom=$form->getData();
+            $Classroom = $form->getData();
 
             // tell Doctrine you want to (eventually) save the Product (no queries yet)
-            $entityManager->persist($Classroom);
+            //$entityManager->persist($Classroom);
 
             // actually executes the queries (i.e. the INSERT query)
             $entityManager->flush();
 
         }
-            return $this->render('classroom/AddClassroom.html.twig', [
+        return $this->render('classroom/AddClassroom.html.twig', [
             'Form' => $form->createView(),
 
         ]);
+    }
+
+        #[Route('/updateClassroom/{id}', name: 'Update_Classroom')]
+    public function updateClassroom($id,Request $request ,ManagerRegistry $doctrine ,ClassroomRepository $repository):Response
+        {
+            $Classroom = $repository->find($id);
+
+            $form = $this->createForm(ClassroomType::class, $Classroom);
+            $entityManager = $doctrine->getManager();
+
+
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+
+
+                $Classroom = $form->getData();
+
+                // tell Doctrine you want to (eventually) save the Product (no queries yet)
+               // $entityManager->persist($Classroom);
+
+                // actually executes the queries (i.e. the INSERT query)
+                $entityManager->flush();
+                return $this->redirectToRoute('list_classroom');
+
+
+            }
+            return $this->render('classroom/AddClassroom.html.twig', [
+                'Form' => $form->createView(),
+
+            ]);
+
+        }
 
 
 
 
+
+    #[Route('/deleteClassroom/{id}', name: 'Delete_Classroom')]
+    public function deleteClassroom($id,Request $request ,ManagerRegistry $doctrine ,ClassroomRepository $repository):Response
+    {
+        $Classroom = $repository->find($id);
+
+
+        $entityManager = $doctrine->getManager();
+
+
+        // tell Doctrine you want to (eventually) save the Product (no queries yet)
+        $entityManager->remove($Classroom);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
+return $this->redirectToRoute('list_classroom');
 
     }
+
+
 
 }

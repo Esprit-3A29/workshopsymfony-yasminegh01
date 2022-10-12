@@ -1,6 +1,7 @@
 <h4>list Classroom</h4>
 <table>
     <tr>
+
         <th>
             ID
         </th>
@@ -12,13 +13,20 @@
     </tr>
 
     {% for i in tab_classroom %}
-    <tr>
-        <td>
+
+        <tr>
+            <td>
            {{ i.id}}
-        </td>
+
+            </td>
         <td>
             {{ i.name}}
         </td>
+            <td>                < <a href="{{ path('Update_Classroom',{'id':i.id}) }}">Update</a>
+            </td>
+            <td>                 <a href="{{ path('Delete_Classroom',{'id':i.id}) }}">Delete</a>
+            </td>
+
 
     </tr>
     {% endfor %}
