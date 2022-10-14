@@ -47,10 +47,12 @@ public function list(ClassroomRepository $repository):Response
             $Classroom = $form->getData();
 
             // tell Doctrine you want to (eventually) save the Product (no queries yet)
-            //$entityManager->persist($Classroom);
+            $entityManager->persist($Classroom);
 
             // actually executes the queries (i.e. the INSERT query)
             $entityManager->flush();
+
+            return $this->redirecttoroute('list_classroom');
 
         }
         return $this->render('classroom/AddClassroom.html.twig', [
