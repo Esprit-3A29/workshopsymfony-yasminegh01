@@ -62,30 +62,42 @@ class StudentController extends AbstractController
        }
     #[Route('/UpdateStudent/{NCS}', name: 'Update_Student')]
 
-    public function UpdateStudent($NCS,Request $request, ManagerRegistry  $doctrine , StudentRepository $repository):Response{
+    public function UpdateStudent($NCS,Request $request, ManagerRegistry  $doctrine , StudentRepository $repository):Response
+    {
 
 
-        $student=$repository->find($NCS);
-            $em=$doctrine->getManager();
-            $form = $this->createForm(AddStudentType::class,$student);
+        $student = $repository->find($NCS);
+        $em = $doctrine->getManager();
+        $form = $this->createForm(AddStudentType::class, $student);
+        $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
 
             $Student = $form->getData();
 
 
-
             $em->flush();
             return $this->redirecttoroute('list_student');
         }
-        return $this->render('student/listStudent.html.twig', [
+        return $this->render('student/AddStudent.html.twig', [
             'Form' => $form->createView(),
 
         ]);
+    }
+
+    #[Route('/DeleteStudent/{NCS}', name: 'Delete_Student')]
 
 
+    public function DeleteStudent(StudentRepository $repository,$NCS,ManagerRegistry $doctrine):Response {
+
+        $student =$repository->find($NCS);
+        $em=$doctrine->getManager();
+        $em->remove($student);
+        $em->flush();
 
 
+        return $this->redirectToRoute('list_student');
 
     }
 
