@@ -14,8 +14,8 @@ class AddStudentType extends AbstractType
     {
         $builder
             ->add('Email')
-            ->add('Submit', SubmitType::class, [
-                'validation_groups' => ['Registration'] ])
+            ->add('Classroom')
+            ->add('Submit', SubmitType::class)
         ;
 
     }

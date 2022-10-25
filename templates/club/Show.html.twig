@@ -1,0 +1,35 @@
+<h4>
+    List Des Clubs
+</h4>
+<table border="1">
+    <tr>
+        <th>
+            REF
+        </th>
+        <th>
+            CreatedArt
+        </th>
+    </tr>
+        <tr>
+            <td>
+                {{ user.id }}
+            </td>
+            <td>
+                {{ user.createdArt }}
+            </td>
+
+        </tr>
+            <td>
+                <form method="post" action="{{ path('Delete_Club', {'id': user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    <button class="btn">Delete</button>
+                </form>
+            </td>
+            <td>
+
+            </
+
+
+
+
+</table>
+

@@ -53,6 +53,7 @@ public function list(ClassroomRepository $repository):Response
             $entityManager->flush();
 
             return $this->redirecttoroute('list_classroom');
+           // return $this->redirectToRoute()
 
         }
         return $this->render('classroom/AddClassroom.html.twig', [
