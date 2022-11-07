@@ -2,34 +2,31 @@
 
 namespace App\Form;
 
-use App\Entity\Classroom;
+use App\Entity\Club;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class ClassroomType extends AbstractType
+class ClubFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('createdArt')
             ->add('name')
-
-
-
-
-        ->add('Submit', SubmitType::class, [
-        'validation_groups' => ['Registration'] ])
-
-
-        ;;
+            ->add('students',EntityType::class,[
+                'class'=> Student::class,
+                'choice_label'=>'email',
+                'multiple'=>true,
+                'expanded'=>true, ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Classroom::class,
+            'data_class' => Club::class,
         ]);
-
     }
 }

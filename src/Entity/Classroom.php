@@ -30,7 +30,7 @@ class Classroom
     {
         return $this->id;
     }
-    }
+
 
     public function getName(): ?string
     {

@@ -13,7 +13,7 @@ class Student
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $NCS = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $Email = null;
@@ -29,9 +29,9 @@ class Student
         $this->clubs = new ArrayCollection();
     }
 
-    public function getNCS(): ?int
+    public function getId(): ?int
     {
-        return $this->NCS;
+        return $this->id;
     }
 
     public function getEmail(): ?string

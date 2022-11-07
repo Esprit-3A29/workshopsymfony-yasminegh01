@@ -21,6 +21,9 @@ class Club
     #[ORM\ManyToMany(targetEntity: Student::class, inversedBy: 'clubs')]
     private Collection $Student;
 
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
     public function __construct()
     {
         $this->Student = new ArrayCollection();
@@ -64,6 +67,18 @@ class Club
     public function removeStudent(Student $student): self
     {
         $this->Student->removeElement($student);
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

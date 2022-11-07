@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Classroom;
+use App\Entity\Club;
 use App\Entity\Student;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,7 +17,18 @@ class AddStudentType extends AbstractType
     {
         $builder
             ->add('Email')
-            ->add('Classroom')
+            ->add('clubs',EntityType::class,[
+                'class' => Club::class,
+                'choice_label' => 'name',
+                'expanded' => true,
+                'multiple' => true
+            ])
+            ->add('classroom',EntityType::class,[
+                'class'=>Classroom::class,
+                'choice_label'=>'name',
+                'expanded'=>true,
+                'multiple'=>false
+            ])
             ->add('Submit', SubmitType::class)
         ;
 
